@@ -1,4 +1,4 @@
-# Warehouse Operations Simulation
+﻿# Warehouse Operations Simulation
 
 A discrete-event simulation model for warehouse operations using SimPy. Models inbound receiving, put-away, picking, packing, and outbound shipping processes to analyze throughput, bottlenecks, and resource utilization under various operational scenarios.
 
@@ -72,44 +72,46 @@ streamlit run src/dashboard.py
 
 ```
 warehouse-simulation/
-├── requirements.txt          # Python dependencies
-├── setup.py                  # Package configuration
-├── README.md                 # This file
-├── src/
-│   ├── main.py               # Entry point — runs all scenarios
-│   ├── dashboard.py          # Streamlit dashboard
-│   ├── model.py              # Core simulation engine (SimPy processes)
-│   ├── config.py             # Configuration dataclasses & defaults
-│   ├── metrics.py            # Metrics collection and aggregation
-│   ├── scenarios.py          # Scenario definitions
-│   └── utils.py              # Utility functions (random variates, etc.)
-├── data/
-│   └── results/              # Simulation output files (CSV)
-└── tests/
-    ├── test_model.py
-    ├── test_metrics.py
-    └── test_scenarios.py
+â”œâ”€â”€ requirements.txt          # Python dependencies
+â”œâ”€â”€ setup.py                  # Package configuration
+â”œâ”€â”€ README.md                 # This file
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ main.py               # Entry point â€” runs all scenarios
+â”‚   â”œâ”€â”€ dashboard.py          # Streamlit dashboard
+â”‚   â”œâ”€â”€ model.py              # Core simulation engine (SimPy processes)
+â”‚   â”œâ”€â”€ config.py             # Configuration dataclasses & defaults
+â”‚   â”œâ”€â”€ metrics.py            # Metrics collection and aggregation
+â”‚   â”œâ”€â”€ scenarios.py          # Scenario definitions
+â”‚   â””â”€â”€ utils.py              # Utility functions (random variates, etc.)
+â”œâ”€â”€ data/
+â”‚   â””â”€â”€ results/              # Simulation output files (CSV)
+â””â”€â”€ tests/
+    â”œâ”€â”€ test_model.py
+    â”œâ”€â”€ test_metrics.py
+    â””â”€â”€ test_scenarios.py
 ```
 
 ## Scenarios
 
 The simulation includes five operational scenarios:
 
-### 1. Baseline — Current Operations
+### 1. Baseline â€” Current Operations
 Standard shift structure with average order volumes. Resources are configured at default levels. This serves as the control against which all other scenarios are measured.
 
-### 2. High Volume — Peak Season
+### 2. High Volume â€” Peak Season
 Order arrival rates and receiving volumes are increased by 50%. Evaluates whether existing resources can handle peak-season demand and identifies where bottlenecks first appear.
 
-### 3. Reduced Resources — Cost Optimization
+### 3. Reduced Resources â€” Cost Optimization
 Resource counts (pickers, packers, put-away crews) are reduced by 20%. Assesses the impact of cost-cutting measures on throughput, cycle time, and service levels.
 
-### 4. Batch Picking — Process Improvement
+### 4. Batch Picking â€” Process Improvement
 Orders are consolidated into batches of 5 before being released to picking. Analyzes how batch picking affects picker travel time, packer workload, and overall order cycle time.
 
-### 5. Extended Shifts — Capacity Expansion
+### 5. Extended Shifts â€” Capacity Expansion
 Two additional hours are added to each shift. Measures the incremental throughput gain from extended operating hours and evaluates whether downstream processes become new bottlenecks.
 
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+<!-- pin -->
