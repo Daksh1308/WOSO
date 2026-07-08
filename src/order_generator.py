@@ -16,7 +16,8 @@ class OrderGenerator:
         self.env.process(self._generate_orders())
 
     def _generate_orders(self):
-        total_minutes = self.config.working_hours * 60 * self.config.simulation_days
+        last_hour = max(s.end_hour for s in self.config.shifts) if self.config.shifts else self.config.working_hours
+        total_minutes = last_hour * 60 * self.config.simulation_days
         while self.env.now < total_minutes:
             self.order_count += 1
             num_items = max(1, int(self.rng.gauss(self.config.items_per_order_mean, self.config.items_per_order_std)))

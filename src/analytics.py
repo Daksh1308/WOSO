@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from typing import List
+from typing import Dict, List, Tuple
 from src.config import Order, SimulationConfig, ORDER_COMPLETED
 
 class Analytics:
@@ -124,6 +124,25 @@ class Analytics:
         plt.savefig(f'output/{scenario_name}_report.png', dpi=150, bbox_inches='tight')
         plt.close()
     
+    def plot_heatmap(self, pick_frequencies: Dict[Tuple[float, float], int], scenario_name: str = "scenario"):
+        if not pick_frequencies:
+            return
+        fig, ax = plt.subplots(figsize=(10, 7))
+        locations = list(pick_frequencies.keys())
+        freqs = list(pick_frequencies.values())
+        xs, ys = zip(*locations)
+        sc = ax.scatter(xs, ys, c=freqs, cmap='hot', s=100, alpha=0.7, edgecolors='black', linewidth=0.5)
+        cbar = plt.colorbar(sc, ax=ax, label='Pick Frequency')
+        ax.set_xlim(0, self.config.warehouse_length)
+        ax.set_ylim(0, self.config.warehouse_width)
+        ax.set_xlabel('Warehouse Length (ft)')
+        ax.set_ylabel('Warehouse Width (ft)')
+        ax.set_title(f'Warehouse Pick Frequency Heat Map - {scenario_name}')
+        ax.invert_yaxis()
+        plt.tight_layout()
+        plt.savefig(f'output/{scenario_name}_heatmap.png', dpi=150, bbox_inches='tight')
+        plt.close()
+
     def print_report(self, kpis: dict, scenario_name: str = "Scenario"):
         print(f"\n{'='*60}")
         print(f"  {scenario_name}")

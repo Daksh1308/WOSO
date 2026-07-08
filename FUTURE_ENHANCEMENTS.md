@@ -8,10 +8,10 @@
 ## Phase 1 — Core Improvements
 
 | # | Enhancement | Priority | Complexity | Status | Notes |
-|---|---|---|---|---|---|
-| 1 | Multi-shift / break scheduling | High | Medium | 🟢 | Model multiple shifts with staggered breaks, handover logic |
-| 2 | Variable walking speeds by worker type | High | Low | 🟢 | Add configurable speed per worker (e.g., trainee vs experienced) |
-| 3 | Warehouse heat maps | Medium | Medium | 🟢 | Plot pick frequency density on warehouse layout |
+|---|---|---|---|---|---|---|
+| 1 | Multi-shift / break scheduling | High | Medium | ✅ | Shift dataclass, break scheduler, multi-shift simulation time |
+| 2 | Variable walking speeds by worker type | High | Low | ✅ | WorkerProfile config, per-worker speed in WorkerPool, PickingProcess accepts speed param |
+| 3 | Warehouse heat maps | Medium | Medium | ✅ | Pick frequency tracking in PickingProcess, Analytics.plot_heatmap() output |
 
 ---
 
@@ -128,5 +128,6 @@ class Shift:
 ## Changelog
 
 | Date | Change |
-|---|---|
+|---|---|---|
+| 2026-07-08 | Phase 1 implemented: multi-shift scheduling, variable walking speeds, warehouse heat maps |
 | 2026-07-07 | Initial future enhancements roadmap created |

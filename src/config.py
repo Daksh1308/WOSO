@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 import random
 
 ORDER_PENDING = "pending"
@@ -8,6 +8,19 @@ ORDER_PACKING = "packing"
 ORDER_QUALITY_CHECK = "quality_check"
 ORDER_SHIPPING = "shipping"
 ORDER_COMPLETED = "completed"
+
+@dataclass
+class Shift:
+    name: str = "Default Shift"
+    start_hour: float = 0.0
+    end_hour: float = 8.0
+    break_start: Optional[float] = None
+    break_duration: float = 0.5
+
+@dataclass
+class WorkerProfile:
+    worker_type: str = "experienced"
+    walking_speed: float = 50.0
 
 @dataclass
 class Order:
@@ -60,6 +73,13 @@ class SimulationConfig:
     receiving_dock: Tuple[float, float] = (0.0, 0.0)
     shipping_dock: Tuple[float, float] = (300.0, 0.0)
     packing_station_location: Tuple[float, float] = (150.0, 0.0)
+
+    shifts: List[Shift] = field(default_factory=lambda: [
+        Shift(name="Default Shift", start_hour=0.0, end_hour=8.0, break_start=None, break_duration=0.5)
+    ])
+    worker_profiles: List[WorkerProfile] = field(default_factory=lambda: [
+        WorkerProfile(worker_type="experienced", walking_speed=50.0)
+    ])
 
     @property
     def orders_per_day(self) -> int:

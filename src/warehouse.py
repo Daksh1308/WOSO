@@ -43,7 +43,8 @@ class WarehouseSimulation:
         order.pick_start_time = self.env.now
         with self.workers.request() as req:
             yield req
-            pick_time = self.picking.calculate_picking_time(order)
+            worker_speed = self.workers.get_next_worker_speed()
+            pick_time = self.picking.calculate_picking_time(order, worker_speed)
             yield self.env.timeout(pick_time)
         order.pick_end_time = self.env.now
         
@@ -76,5 +77,6 @@ class WarehouseSimulation:
     
     def run(self):
         self.order_generator.start()
-        total_time = self.config.working_hours * 60 * self.config.simulation_days
+        last_hour = max(s.end_hour for s in self.config.shifts) if self.config.shifts else self.config.working_hours
+        total_time = last_hour * 60 * self.config.simulation_days
         self.env.run(until=total_time)

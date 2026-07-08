@@ -1,7 +1,7 @@
 import simpy
 import random
 import math
-from typing import List
+from typing import Dict, List, Tuple
 from src.config import Order, Product, SimulationConfig
 from src.inventory import InventoryManager
 
@@ -12,11 +12,14 @@ class PickingProcess:
         self.inventory = inventory
         self.picking_station_location = config.packing_station_location
         self.rng = random.Random(config.random_seed)
+        self.pick_frequencies: Dict[Tuple[float, float], int] = {}
 
     def calculate_travel_distance(self, product_ids: List[int]) -> float:
         if not product_ids:
             return 0.0
         locations = [self.inventory.get_product_location(pid) for pid in product_ids]
+        for loc in locations:
+            self.pick_frequencies[loc] = self.pick_frequencies.get(loc, 0) + 1
         current = self.picking_station_location
         total_distance = 0.0
         for loc in locations:
@@ -26,8 +29,8 @@ class PickingProcess:
         total_distance += return_to_packing
         return total_distance
 
-    def calculate_picking_time(self, order: Order) -> float:
+    def calculate_picking_time(self, order: Order, walking_speed: float) -> float:
         distance = self.calculate_travel_distance(order.items)
-        travel_time = distance / self.config.walking_speed
+        travel_time = distance / walking_speed
         pick_time = len(order.items) * self.config.picking_speed
         return travel_time + pick_time
